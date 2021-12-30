@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:jwt_decode/jwt_decode.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_ui/constants/style.dart';
 import 'package:web_ui/helpers/responsiveness.dart';
+import 'package:web_ui/injector/injector.dart';
+import 'package:web_ui/utils/shared_preferences_manager.dart';
 import 'package:web_ui/widgets/custom_text.dart';
 
-AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) => 
+AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key, SharedPreferences? prefs) => 
   AppBar(
     backgroundColor: Colors.transparent,
     iconTheme: IconThemeData(color:dark),
@@ -65,7 +69,7 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
           color: lightGrey
         ),
         const SizedBox(width:24),
-        CustomText(text: "Santos Enoque", color: lightGrey),
+        CustomText(text: getUserEmailFromToken(prefs!), color: lightGrey),
         const SizedBox(width:16),
         Container(
           decoration: BoxDecoration(
@@ -84,3 +88,18 @@ AppBar topNavigationBar(BuildContext context, GlobalKey<ScaffoldState> key) =>
       ],
     ),
   );
+
+
+  String getUserEmailFromToken(SharedPreferences prefs) {
+  final SharedPreferencesManager _sharedPreferencesManager =
+      locator<SharedPreferencesManager>();
+  if (_sharedPreferencesManager
+      .isKeyExists(SharedPreferencesManager.keyAccessToken)) {
+    String? token = _sharedPreferencesManager.getString(SharedPreferencesManager.keyAccessToken);
+    //print("token:" + token);
+    Map<String, dynamic> id_token_payload = Jwt.parseJwt(token!);
+    return id_token_payload["email"];
+  } else {
+    return "";
+  }
+}

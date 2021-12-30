@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:web_ui/constants/style.dart';
 import 'package:web_ui/layout.dart';
 import 'package:web_ui/routing/routes.dart';
@@ -88,7 +90,8 @@ class AuthenticationPage extends StatelessWidget {
               const SizedBox(height:15),
               InkWell(
                 onTap: () {
-                  Get.offAllNamed(RootRoute);
+                  launchURL();
+                  // Get.offAllNamed(RootRoute);
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -118,5 +121,18 @@ class AuthenticationPage extends StatelessWidget {
         )
       ),
     );
+  }
+}
+
+
+launchURL() async {
+//  const url = 'https://auth.cryptoproline.com/login?client_id=b5u050lva45encgtl4atvcc7s&response_type=code&scope=email+openid&redirect_uri=http://localhost:8080/callback';
+  String url =
+      "${dotenv.env['AUTH_URI']}?client_id=${dotenv.env['CLIENT_ID']}&response_type=code&scope=email+openid&redirect_uri=${dotenv.env['REDIRECT_URI']}";
+  print("url:" + url);
+  if (await canLaunch(url)) {
+    await launch(url, webOnlyWindowName: '_self');
+  } else {
+    throw 'Could not launch $url';
   }
 }

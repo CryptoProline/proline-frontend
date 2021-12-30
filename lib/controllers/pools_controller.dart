@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:web_ui/api/api_client.dart';
 import 'package:web_ui/constants/controllers.dart';
 import 'package:web_ui/constants/style.dart';
 import 'package:web_ui/models/pools_model.dart';
@@ -37,15 +38,15 @@ class PoolsController extends GetxController {
   }
 
   void fetchOpenPools() async {
-    Map<String, dynamic> qParams = {
-          'status':'OPEN',
-    };
-    var response = await http.get(Uri.https('api-dev.cryptoproline.com', 'v1/pools', qParams));
-    var pools = PoolsFromJson(response.body).data;
-    fetchPoolsData(pools);
-    fetchPoolData(pools);
-    poolsList.value = pools;
+
+    var pools = await ApiClient.getOpenPools();
+    // fetchPoolsData(pools.data);
+    fetchPoolData(pools.data);
+    poolsList.value = pools.data;
   }
+
+  void updateOpenPoolData(List<DataRow> availablePools) => poolsRow.value = availablePools;
+  
 
   void fetchPoolsData(List<Datum> pools) async {
     var x =  DataCell(
@@ -78,55 +79,6 @@ class PoolsController extends GetxController {
   }
 
   void fetchPoolData(List<Datum> pools) async {
-    // var betCell =  DataCell(
-    //   Row(
-    //     children: [
-    //       InkWell(
-    //         onTap: () => print("JUST TAPPED HOME ... "),
-    //         child: Container(
-    //             decoration: BoxDecoration(
-    //               color: light,
-    //               borderRadius: BorderRadius.circular(20),
-    //               border: Border.all(color: Colors.grey, width: .5),
-    //             ),
-    //             padding: const EdgeInsets.symmetric(
-    //                 horizontal: 12, vertical: 6),
-    //             child: CustomText(
-    //               text: "Home",
-    //               color: Colors.grey.withOpacity(.7),
-    //               weight: FontWeight.bold,
-    //         )),
-    //       ),
-    //       const SizedBox(width: 5,),
-    //       Container(
-    //           decoration: BoxDecoration(
-    //             color: light,
-    //             borderRadius: BorderRadius.circular(20),
-    //             border: Border.all(color: Colors.grey, width: .5),
-    //           ),
-    //           padding: const EdgeInsets.symmetric(
-    //               horizontal: 12, vertical: 6),
-    //           child: CustomText(
-    //             text: "Box",
-    //             color: Colors.grey.withOpacity(.7),
-    //             weight: FontWeight.bold,
-    //       )),
-    //       const SizedBox(width: 5,),
-    //       Container(
-    //           decoration: BoxDecoration(
-    //             color: light,
-    //             borderRadius: BorderRadius.circular(20),
-    //             border: Border.all(color: Colors.grey, width: .5),
-    //           ),
-    //           padding: const EdgeInsets.symmetric(
-    //               horizontal: 12, vertical: 6),
-    //           child: CustomText(
-    //             text: "Away",
-    //             color: Colors.grey.withOpacity(.7),
-    //             weight: FontWeight.bold,
-    //       )),
-    //     ],
-    //   ));
     List<List<DataRow>> availablePools = pools.map((pool) {
       List<DataRow> matchRow = pool.matches.map((match) {
         List<DataCell> matchCells = [];

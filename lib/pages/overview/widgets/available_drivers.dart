@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:web_ui/constants/controllers.dart';
 import 'package:web_ui/constants/style.dart';
+import 'package:web_ui/pages/overview/widgets/pools_data_row.dart';
 import 'package:web_ui/widgets/custom_text.dart';
 import 'package:web_ui/controllers/pools_controller.dart';
 import 'package:get/get.dart';
@@ -68,7 +69,8 @@ class AvailableDrivers extends StatelessWidget {
                 label: Text('View Pools'),
               ),
             ],
-            rows: poolsController.poolsRow.value
+            rows: fetchPoolsData(poolsController.poolsList.value)
+            // rows: poolsController.poolsRow.value
           )],
       )),
     );
