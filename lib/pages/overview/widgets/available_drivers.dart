@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:web_ui/constants/controllers.dart';
 import 'package:web_ui/constants/style.dart';
-import 'package:web_ui/pages/overview/widgets/pools_data_row.dart';
+import 'package:web_ui/pages/overview/widgets/open_pools_data_row.dart';
 import 'package:web_ui/widgets/custom_text.dart';
 import 'package:web_ui/controllers/pools_controller.dart';
 import 'package:get/get.dart';

@@ -32,6 +32,6 @@ List<DataRow> fetchPoolsData(List<Datum> pools) {
       l.addAll([DataCell(CustomText(text: '$sport')), DataCell(CustomText(text: '$numOfGames')), DataCell(CustomText(text: '$poolStatus')), DataCell(CustomText(text: '$startDateString')), DataCell(CustomText(text: '$endDateString')), x]);
       return DataRow(cells:l);
     }).toList();
-    poolsController.updateOpenPoolData(availablePools);
+    // poolsController.updateOpenPoolData(availablePools);
     return availablePools;
   }
