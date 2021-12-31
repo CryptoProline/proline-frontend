@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:web_ui/models/pools_model.dart';
 import 'package:web_ui/models/token_info.dart';
@@ -12,7 +13,7 @@ class ApiClient {
         r'code': code,
         r'redirect_uri': redirectUri
       };
-      var _response = await http.post(Uri.http('localhost:3000', 'prod/oauth2/token', queryParameters));
+      var _response = await http.post(Uri.https('${dotenv.env['API_NAME']}', 'v1/oauth2/token', queryParameters));
       print("Response" + _response.toString());
       var _token = tokenFromJson(_response.body);
       return _token;
@@ -22,7 +23,7 @@ class ApiClient {
     Map<String, dynamic> qParams = {
       'status':'OPEN',
     };
-    var _response = await http.get(Uri.https('api-dev.cryptoproline.com', 'v1/pools', qParams));
+    var _response = await http.get(Uri.https('${dotenv.env['API_NAME']}', 'v1/pools', qParams));
     var _pools = PoolsFromJson(_response.body);
     return _pools;
   }
