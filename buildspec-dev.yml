@@ -13,7 +13,7 @@ phases:
         - export PATH="$PATH:`pwd`/flutter/bin"
         - flutter precache
         - flutter doctor
-    during_build:
+    build:
         commands:
             - flutter build web --release
             # - aws s3 cp deploy/web s3://dnd-portal --recursive
