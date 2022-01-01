@@ -1,24 +1,22 @@
-version: 0.1
+version: 0.2
 environment_variables:
     plaintext:
         "S3_BUCKET": ""
-containers:
-    LambdaFunctions:
-        phases:
-            install:
-                commands:
-                - pwd
-            pre_build:
-                commands:
-                - echo Pre Build started on `date`
-                - git clone https://github.com/flutter/flutter.git -b stable
-                - export PATH="$PATH:`pwd`/flutter/bin"
-                - flutter precache
-                - flutter doctor
-            during_build:
-                commands:
-                    - flutter build web --release
-                    # - aws s3 cp deploy/web s3://dnd-portal --recursive
-                    # - aws cloudfront create-invalidation --distribution-id ELD8NQ28RL4WW --paths "/*"
-            post_build:
-                commands:
+phases:
+    install:
+        commands:
+        - pwd
+    pre_build:
+        commands:
+        - echo Pre Build started on `date`
+        - git clone https://github.com/flutter/flutter.git -b stable
+        - export PATH="$PATH:`pwd`/flutter/bin"
+        - flutter precache
+        - flutter doctor
+    during_build:
+        commands:
+            - flutter build web --release
+            # - aws s3 cp deploy/web s3://dnd-portal --recursive
+            # - aws cloudfront create-invalidation --distribution-id ELD8NQ28RL4WW --paths "/*"
+    post_build:
+        commands:
