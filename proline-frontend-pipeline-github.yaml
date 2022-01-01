@@ -1,12 +1,12 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "cryp-proline-frontend cloudformation stack"
+Description: "cryp-frontend cloudformation stack"
 Parameters:
   AppName:
     Type: String
     Description: Name of the application.
     MinLength: "1"
     MaxLength: "80"
-    Default: cryp-proline-frontend
+    Default: cryp-frontend
     AllowedPattern: "[A-Za-z0-9-]+"
     ConstraintDescription: Malformed input parameter. AppName must only contain upper and lower case letters, numbers, and -.
   BuildspecFile:
@@ -15,7 +15,7 @@ Parameters:
     Default: buildspec-dev.yml 
   CodeBuildImage:
     Type: String
-    Default: "aws/codebuild/standard:3.0"
+    Default: "aws/codebuild/standard:5.0"
     Description: Image used for CodeBuild project.
   GitHubRepoName:
     Type: String
@@ -212,7 +212,7 @@ Resources:
       ServiceRole: !GetAtt CodeBuildTrustRole.Arn
       Source:
         Type: CODEPIPELINE
-        BuildSpec: !Sub "services/${BuildspecFile}"
+        BuildSpec: !Sub "${BuildspecFile}"
       Tags:
         - Key: app-name
           Value: !Ref AppName

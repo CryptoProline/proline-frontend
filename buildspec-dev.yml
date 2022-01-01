@@ -11,10 +11,11 @@ containers:
                     #- pip install --upgrade awscli
             pre_build:
                 commands:
-                    - git clone https://github.com/flutter/flutter.git -b master
-                    # - git clone https://github.com/flutter/flutter.git -b master
-                    # - ./flutter/bin/flutter --version
-                    # - ./flutter/bin/flutter doctor -v
+                    - echo Pre Build started on `date`
+                    - git clone https://github.com/flutter/flutter.git -b stable
+                    - export PATH="$PATH:`pwd`/flutter/bin"
+                    - flutter precache
+                    - flutter doctor
             during_build:
                 commands:
                     - flutter build web --release
