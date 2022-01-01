@@ -7,15 +7,14 @@ containers:
         phases:
             install:
                 commands:
-                    # Upgrade AWS CLI to the latest version
-                    #- pip install --upgrade awscli
+                - pwd
             pre_build:
                 commands:
-                    - echo Pre Build started on `date`
-                    - git clone https://github.com/flutter/flutter.git -b stable
-                    - export PATH="$PATH:`pwd`/flutter/bin"
-                    - flutter precache
-                    - flutter doctor
+                - echo Pre Build started on `date`
+                - git clone https://github.com/flutter/flutter.git -b stable
+                - export PATH="$PATH:`pwd`/flutter/bin"
+                - flutter precache
+                - flutter doctor
             during_build:
                 commands:
                     - flutter build web --release
