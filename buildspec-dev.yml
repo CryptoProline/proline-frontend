@@ -1,0 +1,24 @@
+version: 0.0
+environment_variables:
+    plaintext:
+        "S3_BUCKET": ""
+containers:
+    LambdaFunctions:
+        phases:
+            install:
+                commands:
+                    # Upgrade AWS CLI to the latest version
+                    #- pip install --upgrade awscli
+            pre_build:
+                commands:
+                    - git clone https://github.com/flutter/flutter.git -b master
+                    # - git clone https://github.com/flutter/flutter.git -b master
+                    # - ./flutter/bin/flutter --version
+                    # - ./flutter/bin/flutter doctor -v
+            during_build:
+                commands:
+                    - flutter build web --release
+                    # - aws s3 cp deploy/web s3://dnd-portal --recursive
+                    # - aws cloudfront create-invalidation --distribution-id ELD8NQ28RL4WW --paths "/*"
+            post_build:
+                commands:
