@@ -68,7 +68,23 @@ class OpenPool extends StatelessWidget {
                 ),
               ),
             ),
-            Text(poolsController.numberSelected(poolName).toString())
+            Obx(() => Text(poolsController.poolSelectionCount.value[poolName].toString())),
+            Obx(() => InkWell(
+              onTap: () => poolsController.createBet(poolName),
+              child:  Container(
+                  decoration: BoxDecoration(
+                    color: light,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: poolsController.checkTotal(poolName, poolsController.poolSelectionCount.value[poolName]!) ? active: Colors.grey, width: .5),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 24, vertical: 12),
+                  child: CustomText(
+                    text: "Place Bet",
+                    color: poolsController.checkTotal(poolName, poolsController.poolSelectionCount.value[poolName]!) ? active: Colors.grey.withOpacity(.7),
+                    weight: FontWeight.bold,
+              )),
+            )),
           ],
         ),
       );

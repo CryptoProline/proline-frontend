@@ -22,11 +22,14 @@ class PoolsController extends GetxController {
   var listBet = <String>[].obs;
 
   var mapBet = <String, String>{}.obs;
+  // var mapBet = <String, String>{}.obs;
   
 
   var mapMatchRow = <String, List<DataRow>>{}.obs;
 
   var mapB = <String, Map<String, String>>{}.obs;
+
+  var poolSelectionCount = <String, int>{}.obs;
 
 
   // var betOption = <List>
@@ -45,6 +48,25 @@ class PoolsController extends GetxController {
     poolsList.value = pools.data;
   }
 
+  bool checkTotal(String poolName, int numSelected){
+    bool check = false;
+    poolsList.value.forEach((pool) {
+      if(pool.sportType == poolName) {
+        if(pool.numOfGames == numSelected) {
+          check = true;
+        }
+      }
+    });
+    return check;
+  } 
+
+
+  void createBet(String poolName) {
+    mapB.value[poolName]!.forEach((key, value) {
+      print("$key : $value");
+    });
+  }
+
   // void updateOpenPoolData(List<DataRow> availablePools) => poolsRow.value = availablePools;
   
 
@@ -53,12 +75,15 @@ class PoolsController extends GetxController {
     List<List<DataRow>> availablePools = pools.map((pool) {
       List<DataRow> matchRow = pool.matches.map((match) {
         List<DataCell> matchCells = [];
+        var poolType = pool.sportType;
+        poolSelectionCount.value['$poolType'] = 0;
         var matchDate = match.date;
         var matchDateString = DateFormat('MMMMEEEEd').format(DateTime.parse(matchDate)); 
         var matchTimeString = DateFormat('jm').format(DateTime.parse(matchDate)); 
         var matchDateTime = "$matchTimeString, $matchDateString";
         var away = match.away;
         var home = match.home;
+        var matchId = match.id;
         // mapBet.value['$home$away'] = 'none';
         matchCells.addAll([
           DataCell(CustomText(text: '$matchDateTime')), 
@@ -69,52 +94,52 @@ class PoolsController extends GetxController {
            Obx(() =>  Row(
               children: [
                 InkWell(
-                  onTap: () => poolsController.changeButton(home, away, "home"),
+                  onTap: () => poolsController.changeButton(matchId, "home",poolType),
                   child:  Container(
                       decoration: BoxDecoration(
                         color: light,
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: poolsController.checkButton(home, away, "home") ? active: Colors.grey, width: .5),
+                        border: Border.all(color: poolsController.checkButton(matchId, "home", poolType) ? active: Colors.grey, width: .5),
                       ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 6),
                       child: CustomText(
                         text: "Home",
-                        color: poolsController.checkButton(home, away, "home") ? active: Colors.grey.withOpacity(.7),
+                        color: poolsController.checkButton(matchId, "home", poolType) ? active: Colors.grey.withOpacity(.7),
                         weight: FontWeight.bold,
                   )),
                 ),
                 const SizedBox(width: 5,),
                 InkWell(
-                  onTap: () => poolsController.changeButton(home, away, "box"),
+                  onTap: () => poolsController.changeButton(matchId, "box", poolType),
                   child: Container(
                       decoration: BoxDecoration(
                         color: light,
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: poolsController.checkButton(home, away, "box") ? active: Colors.grey, width: .5),
+                        border: Border.all(color: poolsController.checkButton(matchId, "box", poolType) ? active: Colors.grey, width: .5),
                       ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 6),
                       child: CustomText(
                         text: "Box",
-                        color: poolsController.checkButton(home, away, "box") ? active: Colors.grey.withOpacity(.7),
+                        color: poolsController.checkButton(matchId, "box", poolType) ? active: Colors.grey.withOpacity(.7),
                         weight: FontWeight.bold,
                   )),
                 ),
                 const SizedBox(width: 5,),
                 InkWell(
-                  onTap: () => poolsController.changeButton(home, away, "away"),
+                  onTap: () => poolsController.changeButton(matchId, "away", poolType),
                   child: Container(
                       decoration: BoxDecoration(
                         color: light,
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: poolsController.checkButton(home, away, "away") ? active: Colors.grey, width: .5),
+                        border: Border.all(color: poolsController.checkButton(matchId, "away", poolType) ? active: Colors.grey, width: .5),
                       ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 6),
                       child: CustomText(
                         text: "Away",
-                        color: poolsController.checkButton(home, away, "away") ? active: Colors.grey.withOpacity(.7),
+                        color: poolsController.checkButton(matchId, "away", poolType) ? active: Colors.grey.withOpacity(.7),
                         weight: FontWeight.bold,
                   )),
                 ),
@@ -130,13 +155,26 @@ class PoolsController extends GetxController {
     matchRow.value = availablePools;
   }
 
-  void changeButton(String home, String away, String change) {
-    mapBet.value['$home$away'] = change;
-    mapBet.refresh();
+  void changeButton(String matchId, String change, String poolType) { 
+
+    // mapB[poolType]![matchId] = "json";
+    if(mapB.value[poolType] == null) {
+      mapB.value[poolType] = new Map();
+    }
+    if(mapB.value[poolType]![matchId] == null) {
+      poolSelectionCount.value['$poolType'] = poolSelectionCount.value['$poolType']! + 1;
+    }
+
+    mapB.value[poolType] = {...mapB.value[poolType]!, matchId:change};
+    mapB.refresh();
+    poolSelectionCount.refresh();
   }
 
-  bool checkButton(String home, String away, String value) {
-    if (mapBet.value['$home$away'] != value) {
+  bool checkButton(String matchId, String value, String poolType) {
+    if(mapB.value[poolType] == null) {
+      return false;
+    }
+    if (mapB[poolType]![matchId]  != value) {
       return false;
     } else {
       return true;
