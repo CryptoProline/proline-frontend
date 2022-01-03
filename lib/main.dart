@@ -16,7 +16,7 @@ import 'package:url_strategy/url_strategy.dart';
 import 'controllers/pools_controller.dart';
 
 Future<void> main() async {
-  await dotenv.load(fileName: "../environment/local.env");
+  await dotenv.load(fileName: "environment/local.env");
   setPathUrlStrategy();
   await setupLocator();
   Get.put(MenuController());
@@ -34,36 +34,27 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       initialRoute: AuthenticationPageRoute,
       unknownRoute: GetPage(
-        name: '/not-found', 
-        page: () => PageNotFound(), 
-        transition: Transition.fadeIn
-      ),
+          name: '/not-found',
+          page: () => PageNotFound(),
+          transition: Transition.fadeIn),
       getPages: [
+        GetPage(name: RootRoute, page: () => SiteLayout()),
+        GetPage(name: '/callback', page: () => PageTokenStateful()),
         GetPage(
-          name: RootRoute, 
-          page: () => SiteLayout()
-        ),
-        GetPage(
-          name: '/callback', 
-          page: () => PageTokenStateful()
-        ),
-        GetPage(name: AuthenticationPageRoute, page: () => const AuthenticationPage()),
+            name: AuthenticationPageRoute,
+            page: () => const AuthenticationPage()),
       ],
       debugShowCheckedModeBanner: false,
       title: 'Dash',
       theme: ThemeData(
-        scaffoldBackgroundColor: light,
-        textTheme: GoogleFonts.mulishTextTheme(
-          Theme.of(context).textTheme
-        ).apply(
-          bodyColor: Colors.black
-        ),
-        pageTransitionsTheme: const PageTransitionsTheme(builders: {
-          TargetPlatform.iOS:  FadeUpwardsPageTransitionsBuilder(),
-          TargetPlatform.android: FadeUpwardsPageTransitionsBuilder()
-        }),
-        primaryColor: Colors.blue
-      ),
+          scaffoldBackgroundColor: light,
+          textTheme: GoogleFonts.mulishTextTheme(Theme.of(context).textTheme)
+              .apply(bodyColor: Colors.black),
+          pageTransitionsTheme: const PageTransitionsTheme(builders: {
+            TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
+            TargetPlatform.android: FadeUpwardsPageTransitionsBuilder()
+          }),
+          primaryColor: Colors.blue),
       home: const AuthenticationPage(),
       // home: SiteLayout(),
     );
