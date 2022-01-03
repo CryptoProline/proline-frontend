@@ -16,7 +16,7 @@ phases:
     build:
         commands:
             - flutter build web --release
-            - aws s3 cp build/web s3://cryp-frontend-985194350712-us-east-1-pipeline --recursive
+            - aws s3 cp build/web s3://cryp-proline-frontend-985194350712-us-east-1 --recursive
             # - aws cloudfront create-invalidation --distribution-id ELD8NQ28RL4WW --paths "/*"
     post_build:
         commands:
