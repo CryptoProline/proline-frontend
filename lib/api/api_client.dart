@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:web_ui/injector/injector.dart';
 import 'package:web_ui/models/pools_model.dart';
 import 'package:web_ui/models/token_info.dart';
 import 'package:web_ui/models/token_model.dart';
+import 'package:web_ui/utils/shared_preferences_manager.dart';
 
 
 class ApiClient {
@@ -26,6 +30,26 @@ class ApiClient {
     var _response = await http.get(Uri.https('${dotenv.env['API_NAME']}', 'v1/pools', qParams));
     var _pools = PoolsFromJson(_response.body);
     return _pools;
+  }
+
+  static Future<String> getCoinbaseUrl(Map data) async {
+    var body = json.encode(data);
+    final SharedPreferencesManager _sharedPreferencesManager = locator<SharedPreferencesManager>();
+    if (_sharedPreferencesManager.isKeyExists(SharedPreferencesManager.keyAccessToken)) {
+      String? token = _sharedPreferencesManager.getString(SharedPreferencesManager.keyAccessToken);
+      print(token);
+      var _qParams = {
+        'Authorization': 'Bearer ' + token!
+      };
+      var _response = await http.post(
+        Uri.http('localhost:3000', 'prod/payments/coinbase'), 
+        body:body,
+        headers: _qParams
+      );
+      var decodedResp = json.decode(_response.body);
+      return decodedResp["data"]["transaction_url"];
+    }
+    return "";
   }
 
 

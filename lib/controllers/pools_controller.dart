@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:web_ui/api/api_client.dart';
 import 'package:web_ui/constants/controllers.dart';
 import 'package:web_ui/constants/style.dart';
@@ -61,10 +62,22 @@ class PoolsController extends GetxController {
   } 
 
 
-  void createBet(String poolName) {
+  Future<void> createBet(String poolName) async {
+    List<Map> matches = [];
     mapB.value[poolName]!.forEach((key, value) {
-      print("$key : $value");
+      matches.add({key:value});
     });
+    var body = {
+      'pool_id': poolName,
+      'wager_amount': '5',
+      'matches': matches
+    };
+    var coinbaseUrl = await ApiClient.getCoinbaseUrl(body);
+    if (await canLaunch(coinbaseUrl)) {
+      await launch(coinbaseUrl);
+    } else {
+      throw 'Could not launch $coinbaseUrl';
+    }
   }
 
   // void updateOpenPoolData(List<DataRow> availablePools) => poolsRow.value = availablePools;
