@@ -122,7 +122,10 @@ Resources:
           Effect: Allow
         - Action: ["events:*"]
           Resource: ["*"]
-          Effect: Allow                               
+          Effect: Allow
+        - Effect: Allow
+          Resource: ["*"]
+          Action: ["cloudfront:*"]                               
       Roles: [!Ref CodeBuildTrustRole]
   CloudFormationRolePolicy:
     Type: AWS::IAM::Policy
