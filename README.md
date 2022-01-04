@@ -8,4 +8,4 @@ flutter run -d chrome --web-port 60124
 
 
 # Compile
-call flutter build web --release
+flutter build web --release
