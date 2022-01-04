@@ -15,7 +15,7 @@ phases:
         - flutter doctor
     build:
         commands:
-            - flutter build web --release
+            - flutter build web -t lib/main_dev.dart --release
             - aws s3 cp build/web s3://cryp-proline-frontend-985194350712-us-east-1 --recursive
             - aws cloudfront create-invalidation --distribution-id E25L7XZNT4YV5F --paths "/*"
     post_build:

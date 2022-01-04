@@ -15,8 +15,8 @@ import 'package:url_strategy/url_strategy.dart';
 
 import 'controllers/pools_controller.dart';
 
-Future<void> main() async {
-  await dotenv.load(fileName: "environment/local.env");
+Future<void> main(env) async {
+  await dotenv.load(fileName: "environment/${env}.env");
   setPathUrlStrategy();
   await setupLocator();
   Get.put(MenuController());
