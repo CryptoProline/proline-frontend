@@ -33,6 +33,8 @@ class PoolsController extends GetxController {
   var poolSelectionCount = <String, int>{}.obs;
 
 
+  var poolBettingStats = <String, Map<String, int>>{}.obs;
+
   // var betOption = <List>
 
   @override
@@ -61,6 +63,11 @@ class PoolsController extends GetxController {
     return check;
   } 
 
+  double getTotalGames(String poolName) {
+    var percentage = poolSelectionCount.value[poolName]! / mapMatchRow[poolName]!.length;
+    return percentage;
+  }
+
 
   Future<void> createBet(String poolName) async {
     List<Map> matches = [];
@@ -72,12 +79,12 @@ class PoolsController extends GetxController {
       'wager_amount': '5',
       'matches': matches
     };
-    var coinbaseUrl = await ApiClient.getCoinbaseUrl(body);
-    if (await canLaunch(coinbaseUrl)) {
-      await launch(coinbaseUrl);
-    } else {
-      throw 'Could not launch $coinbaseUrl';
-    }
+    await ApiClient.getCoinbaseUrl(body);
+    // if (await canLaunch(coinbaseUrl)) {
+    //   await launch(coinbaseUrl);
+    // } else {
+    //   throw 'Could not launch $coinbaseUrl';
+    // }
   }
 
   // void updateOpenPoolData(List<DataRow> availablePools) => poolsRow.value = availablePools;
@@ -99,7 +106,15 @@ class PoolsController extends GetxController {
         var matchId = match.id;
         // mapBet.value['$home$away'] = 'none';
         matchCells.addAll([
-          DataCell(CustomText(text: '$matchDateTime')), 
+          DataCell( 
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomText(text: "$matchDateString"),
+                CustomText(text: "$matchTimeString", weight: FontWeight.w100, color:Colors.grey[850]),
+              ],
+            )
+          ), 
           DataCell(CustomText(text: '$away')), 
           DataCell(CustomText(text: '$home'),),
           // betCell,
@@ -163,6 +178,7 @@ class PoolsController extends GetxController {
         return DataRow(cells: matchCells,);
       }).toList();
       mapMatchRow.value[pool.sportType] = matchRow;
+      poolBettingStats[pool.sportType] = {'home':0, 'away':0, 'box':0};
       return matchRow;
     }).toList();
     matchRow.value = availablePools;
@@ -171,16 +187,27 @@ class PoolsController extends GetxController {
   void changeButton(String matchId, String change, String poolType) { 
 
     // mapB[poolType]![matchId] = "json";
-    if(mapB.value[poolType] == null) {
-      mapB.value[poolType] = new Map();
+    if(mapB[poolType] == null) {
+      mapB[poolType] = new Map();
     }
-    if(mapB.value[poolType]![matchId] == null) {
-      poolSelectionCount.value['$poolType'] = poolSelectionCount.value['$poolType']! + 1;
+    
+
+    if(mapB[poolType]![matchId] == null) {
+      poolSelectionCount['$poolType'] = poolSelectionCount['$poolType']! + 1;
+      poolBettingStats[poolType]![change] = poolBettingStats[poolType]![change]! + 1;
+    } else {
+      print("BEFORE : " +  mapB[poolType]![matchId]!);
+      var changeBefore = mapB[poolType]![matchId]!;
+      poolBettingStats[poolType]![changeBefore] = poolBettingStats[poolType]![changeBefore]! - 1;
+      print("POOL BET STAT : " + poolBettingStats[poolType]![change].toString());
+      poolBettingStats[poolType]![change] = poolBettingStats[poolType]![change]! + 1;
     }
 
-    mapB.value[poolType] = {...mapB.value[poolType]!, matchId:change};
+    mapB[poolType] = {...mapB[poolType]!, matchId:change};
+    print("AFTER : " +  mapB[poolType]![matchId]!);
     mapB.refresh();
     poolSelectionCount.refresh();
+    poolBettingStats.refresh();
   }
 
   bool checkButton(String matchId, String value, String poolType) {
