@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:progress_state_button/progress_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web_ui/api/api_client.dart';
 import 'package:web_ui/constants/controllers.dart';
@@ -15,6 +16,10 @@ import 'package:http/http.dart' as http;
 
 class PoolsController extends GetxController {
   static PoolsController instance = Get.find();
+
+
+  var buttonState = ButtonState.idle.obs;
+
   var poolsList = <Datum>[].obs;
   // var poolsRow = <DataRow>[].obs;
 
@@ -36,6 +41,7 @@ class PoolsController extends GetxController {
   var poolBettingStats = <String, Map<String, int>>{}.obs;
 
   // var betOption = <List>
+
 
   @override
   void onInit() {
@@ -72,19 +78,23 @@ class PoolsController extends GetxController {
   Future<void> createBet(String poolName) async {
     List<Map> matches = [];
     mapB.value[poolName]!.forEach((key, value) {
-      matches.add({key:value});
+      matches.add({"match_id": key, "pick": value});
     });
     var body = {
       'pool_id': poolName,
       'wager_amount': '5',
       'matches': matches
     };
-    await ApiClient.getCoinbaseUrl(body);
-    // if (await canLaunch(coinbaseUrl)) {
-    //   await launch(coinbaseUrl);
-    // } else {
-    //   throw 'Could not launch $coinbaseUrl';
-    // }
+    var coinbaseUrl = await ApiClient.getCoinbaseUrl(body);
+    if(coinbaseUrl == ""){
+      buttonState.value = ButtonState.fail;
+    }
+    buttonState.value = ButtonState.success;
+    if (await canLaunch(coinbaseUrl)) {
+      await launch(coinbaseUrl);
+    } else {
+      throw 'Could not launch $coinbaseUrl';
+    }
   }
 
   // void updateOpenPoolData(List<DataRow> availablePools) => poolsRow.value = availablePools;

@@ -6,6 +6,12 @@ import 'package:web_ui/constants/style.dart';
 import 'package:web_ui/helpers/responsiveness.dart';
 import 'package:web_ui/widgets/custom_text.dart';
 
+
+import 'package:progress_state_button/iconed_button.dart';
+import 'package:progress_state_button/progress_button.dart';
+
+import 'package:percent_indicator/percent_indicator.dart';
+
 class OpenPool extends StatelessWidget {
   final List<DataRow> dataRow;
   final String poolName;
@@ -35,10 +41,12 @@ class OpenPool extends StatelessWidget {
           //         rows: <DataRow>[]),
           Expanded(
             child: Container(
-              margin: EdgeInsets.only(bottom:30, top:30, right: _width /64),
+              margin: EdgeInsets.only(bottom:30, right: _width /64),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
+                // border: Border(top: BorderSide(color: Colors.orange, width: 3)),
+                // border: Border.all(color: Colors.orange, width: 3),
                 boxShadow: [
                   BoxShadow(
                     offset: const Offset(0,6),
@@ -101,7 +109,7 @@ class OpenPool extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(bottom:30, top:30, right: _width /64),
+            margin: EdgeInsets.only(bottom:30, right: _width /64),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),
@@ -123,12 +131,26 @@ class OpenPool extends StatelessWidget {
                   SizedBox(
                     width:170,
                     height:170,
-                    child: Obx(() => CircularProgressIndicator(
-                      color: Colors.green,
-                      value: poolsController.getTotalGames(poolName),
-                      backgroundColor: Colors.grey,
-                      strokeWidth: 14,
+                    child: Obx(() => CircularPercentIndicator(
+                      radius:170,
+                      lineWidth: 18.0,
+                      backgroundColor: Colors.grey[350]!,
+                      percent: poolsController.getTotalGames(poolName),
+                      circularStrokeCap: CircularStrokeCap.round,
+                      animation:true,
+                      animateFromLastPercent: true,
+                      animationDuration: 300,
+                      progressColor: Colors.green,
+                      // linearGradient: LinearGradient(colors: [Colors.green, Colors.orange[300]!]),
+                      // arcBackgroundColor: Colors.grey[350]!,
+                      // arcType: ArcType.FULL,
                     ))
+                    // child: Obx(() => CircularProgressIndicator(
+                    //   color: Colors.green,
+                    //   value: poolsController.getTotalGames(poolName),
+                    //   backgroundColor: Colors.grey[350],
+                    //   strokeWidth: 18,
+                    // ))
                   ),
                   const SizedBox(height:50,),
                   Obx(() => Row(
@@ -158,22 +180,51 @@ class OpenPool extends StatelessWidget {
                   // SizedBox(height:10,),
                   // Obx(() => CustomText(text: "Away Games: " + poolsController.poolBettingStats.value[poolName]!['away'].toString())),
                   const SizedBox(height:50,),
-                  Obx(() => InkWell(
-                  onTap: () => poolsController.createBet(poolName),
-                  child:  Container(
-                      decoration: BoxDecoration(
-                        color: light,
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(color: poolsController.checkTotal(poolName, poolsController.poolSelectionCount.value[poolName]!) ? active: Colors.grey, width: .5),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 12),
-                      child: CustomText(
+                //   Obx(() => InkWell(
+                //   onTap: () => poolsController.createBet(poolName),
+                //   child:  Container(
+                //       decoration: BoxDecoration(
+                //         color: light,
+                //         borderRadius: BorderRadius.circular(15),
+                //         border: Border.all(color: poolsController.checkTotal(poolName, poolsController.poolSelectionCount.value[poolName]!) ? active: Colors.grey, width: .5),
+                //       ),
+                //       padding: const EdgeInsets.symmetric(
+                //           horizontal: 24, vertical: 12),
+                //       child: CustomText(
+                //         text: "Place Bet",
+                //         color: poolsController.checkTotal(poolName, poolsController.poolSelectionCount.value[poolName]!) ? active: Colors.grey.withOpacity(.7),
+                //         weight: FontWeight.bold,
+                //   )),
+                // )),
+                Obx(() => ProgressButton.icon(iconedButtons: {
+                  ButtonState.idle:
+                    IconedButton(
                         text: "Place Bet",
-                        color: poolsController.checkTotal(poolName, poolsController.poolSelectionCount.value[poolName]!) ? active: Colors.grey.withOpacity(.7),
-                        weight: FontWeight.bold,
-                  )),
-                )),
+                        icon: Icon(Icons.send,color: Colors.white),
+                        color: poolsController.checkTotal(poolName, poolsController.poolSelectionCount.value[poolName]!) ? Colors.deepPurple.shade500 : Colors.grey[350]!
+                      ),
+                  ButtonState.loading:
+                    IconedButton(
+                        text: "Loading",
+                        color: Colors.deepPurple.shade700),
+                  ButtonState.fail:
+                    IconedButton(
+                        text: "Failed",
+                        icon: Icon(Icons.cancel,color: Colors.white),
+                        color: Colors.red.shade300),
+                  ButtonState.success:
+                    IconedButton(
+                        text: "Redirected",
+                        icon: Icon(Icons.check_circle,color: Colors.white,),
+                        color: Colors.green.shade400)
+                  }, 
+                  onPressed: (){
+                    if(poolsController.checkTotal(poolName, poolsController.poolSelectionCount.value[poolName]!)){
+                      poolsController.buttonState.value = ButtonState.loading;
+                      poolsController.createBet(poolName);
+                    } 
+                  },
+                  state: poolsController.buttonState.value))
                 ],
               ),
             )
