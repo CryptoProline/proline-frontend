@@ -42,7 +42,7 @@ class ApiClient {
         'Authorization': 'Bearer ' + token!
       };
       var _response = await http.post(
-        Uri.http('localhost:3000', 'prod/payments/coinbase'), 
+        Uri.https('${dotenv.env['API_NAME']}', 'v1/payments/coinbase'), 
         body:body,
         headers: _qParams
       );
