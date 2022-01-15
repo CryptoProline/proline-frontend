@@ -152,34 +152,113 @@ class OpenPool extends StatelessWidget {
                     //   strokeWidth: 18,
                     // ))
                   ),
-                  const SizedBox(height:50,),
-                  Obx(() => Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const CustomText(text: "Home Games: ", size: 20,),
-                      CustomText(size: 20, text: poolsController.poolBettingStats.value[poolName]!['home'].toString(), weight:FontWeight.bold),
-                    ],
+                  const SizedBox(height:40,),
+                  Obx(() => Container(
+                    width:230,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!, width: 1.5)
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomText(
+                          text: "Home Games",
+                          size: 20,
+                          weight: FontWeight.w300,
+                          color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
+                        ),
+                        CustomText(
+                          text: poolsController.poolBettingStats.value[poolName]!['home'].toString(),
+                          size: 20,
+                          weight: FontWeight.bold,
+                          color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
+                        )
+                      ],
+                    )
                   )),
-                  const SizedBox(height:10,),
-                  Obx(() => Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const CustomText(text: "Box Games: ", size: 20,),
-                      CustomText(size: 20, text: poolsController.poolBettingStats.value[poolName]!['box'].toString(), weight:FontWeight.bold),
-                    ],
-                  )),
-                  const SizedBox(height:10,),
-                  Obx(() => Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const CustomText(text: "Away Games: ", size: 20,),
-                      CustomText(size: 20, text: poolsController.poolBettingStats.value[poolName]!['away'].toString(), weight:FontWeight.bold),
-                    ],
-                  )),
-                  // Obx(() => CustomText(text: "Boxed Games: " + poolsController.poolBettingStats.value[poolName]!['box'].toString())),
-                  // SizedBox(height:10,),
-                  // Obx(() => CustomText(text: "Away Games: " + poolsController.poolBettingStats.value[poolName]!['away'].toString())),
-                  const SizedBox(height:50,),
+                  const SizedBox(height:10,),                
+                  Obx(() => Container(
+                    width:230,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!, width: 1.5)
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomText(
+                          text: "Box Games",
+                          size: 20,
+                          weight: FontWeight.w300,
+                          color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
+                        ),
+                        CustomText(
+                          text: poolsController.poolBettingStats.value[poolName]!['box'].toString(),
+                          size: 20,
+                          weight: FontWeight.bold,
+                          color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
+                        )
+                      ],
+                    )
+                  )),     
+                  const SizedBox(height:10,),                
+                  Obx(() => Container(
+                    width:230,
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!, width: 1.5)
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomText(
+                          text: "Away Games",
+                          size: 20,
+                          weight: FontWeight.w300,
+                          color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
+                        ),
+                        CustomText(
+                          text: poolsController.poolBettingStats.value[poolName]!['away'].toString(),
+                          size: 20,
+                          weight: FontWeight.bold,
+                          color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
+                        )
+                      ],
+                    )
+                  )),    
+                  const SizedBox(height:40),       
+                  // Obx(() => Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     const CustomText(text: "Home Games: ", size: 20,),
+                  //     CustomText(size: 20, text: poolsController.poolBettingStats.value[poolName]!['home'].toString(), weight:FontWeight.bold),
+                  //   ],
+                  // )),
+                  // const SizedBox(height:10,),
+                  // Obx(() => Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     const CustomText(text: "Box Games: ", size: 20,),
+                  //     CustomText(size: 20, text: poolsController.poolBettingStats.value[poolName]!['box'].toString(), weight:FontWeight.bold),
+                  //   ],
+                  // )),
+                  // const SizedBox(height:10,),
+                  // Obx(() => Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     const CustomText(text: "Away Games: ", size: 20,),
+                  //     CustomText(size: 20, text: poolsController.poolBettingStats.value[poolName]!['away'].toString(), weight:FontWeight.bold),
+                  //   ],
+                  // )),
+
+                  // const SizedBox(height:50,),
                 //   Obx(() => InkWell(
                 //   onTap: () => poolsController.createBet(poolName),
                 //   child:  Container(

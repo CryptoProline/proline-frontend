@@ -49,6 +49,10 @@ class PoolsController extends GetxController {
     super.onInit();
   }
 
+  bool checkIfSelectionStarted(String poolName) {
+    return poolSelectionCount[poolName]! > 0;
+  }
+
   void fetchOpenPools() async {
 
     var pools = await ApiClient.getOpenPools();
