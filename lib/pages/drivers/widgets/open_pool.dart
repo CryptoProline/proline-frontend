@@ -108,206 +108,206 @@ class OpenPool extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(bottom:30, right: _width /64),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: [
-                BoxShadow(
-                  offset: const Offset(0,6),
-                  color: lightGrey.withOpacity(0.1),
-                  blurRadius: 12,
-                )
-              ]
-            ),
-            padding: const EdgeInsets.all(16),
-            width:300,
-            height:550,
-            child: Expanded(
-              child: Column(
-                children: [
-                  const SizedBox(height:40),
-                  SizedBox(
-                    width:170,
-                    height:170,
-                    child: Obx(() => CircularPercentIndicator(
-                      radius:170,
-                      lineWidth: 18.0,
-                      backgroundColor: Colors.grey[350]!,
-                      percent: poolsController.getTotalGames(poolName),
-                      circularStrokeCap: CircularStrokeCap.round,
-                      animation:true,
-                      animateFromLastPercent: true,
-                      animationDuration: 300,
-                      progressColor: Colors.green,
-                      // linearGradient: LinearGradient(colors: [Colors.green, Colors.orange[300]!]),
-                      // arcBackgroundColor: Colors.grey[350]!,
-                      // arcType: ArcType.FULL,
-                    ))
-                    // child: Obx(() => CircularProgressIndicator(
-                    //   color: Colors.green,
-                    //   value: poolsController.getTotalGames(poolName),
-                    //   backgroundColor: Colors.grey[350],
-                    //   strokeWidth: 18,
-                    // ))
-                  ),
-                  const SizedBox(height:40,),
-                  Obx(() => Container(
-                    width:230,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!, width: 1.5)
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomText(
-                          text: "Home Games",
-                          size: 20,
-                          weight: FontWeight.w300,
-                          color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
-                        ),
-                        CustomText(
-                          text: poolsController.poolBettingStats.value[poolName]!['home'].toString(),
-                          size: 20,
-                          weight: FontWeight.bold,
-                          color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
-                        )
-                      ],
-                    )
-                  )),
-                  const SizedBox(height:10,),                
-                  Obx(() => Container(
-                    width:230,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!, width: 1.5)
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomText(
-                          text: "Box Games",
-                          size: 20,
-                          weight: FontWeight.w300,
-                          color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
-                        ),
-                        CustomText(
-                          text: poolsController.poolBettingStats.value[poolName]!['box'].toString(),
-                          size: 20,
-                          weight: FontWeight.bold,
-                          color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
-                        )
-                      ],
-                    )
-                  )),     
-                  const SizedBox(height:10,),                
-                  Obx(() => Container(
-                    width:230,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!, width: 1.5)
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomText(
-                          text: "Away Games",
-                          size: 20,
-                          weight: FontWeight.w300,
-                          color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
-                        ),
-                        CustomText(
-                          text: poolsController.poolBettingStats.value[poolName]!['away'].toString(),
-                          size: 20,
-                          weight: FontWeight.bold,
-                          color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
-                        )
-                      ],
-                    )
-                  )),    
-                  const SizedBox(height:40),       
-                  // Obx(() => Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     const CustomText(text: "Home Games: ", size: 20,),
-                  //     CustomText(size: 20, text: poolsController.poolBettingStats.value[poolName]!['home'].toString(), weight:FontWeight.bold),
-                  //   ],
-                  // )),
-                  // const SizedBox(height:10,),
-                  // Obx(() => Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     const CustomText(text: "Box Games: ", size: 20,),
-                  //     CustomText(size: 20, text: poolsController.poolBettingStats.value[poolName]!['box'].toString(), weight:FontWeight.bold),
-                  //   ],
-                  // )),
-                  // const SizedBox(height:10,),
-                  // Obx(() => Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     const CustomText(text: "Away Games: ", size: 20,),
-                  //     CustomText(size: 20, text: poolsController.poolBettingStats.value[poolName]!['away'].toString(), weight:FontWeight.bold),
-                  //   ],
-                  // )),
+          // Container(
+          //   margin: EdgeInsets.only(bottom:30, right: _width /64),
+          //   decoration: BoxDecoration(
+          //     color: Colors.white,
+          //     borderRadius: BorderRadius.circular(8),
+          //     boxShadow: [
+          //       BoxShadow(
+          //         offset: const Offset(0,6),
+          //         color: lightGrey.withOpacity(0.1),
+          //         blurRadius: 12,
+          //       )
+          //     ]
+          //   ),
+          //   padding: const EdgeInsets.all(16),
+          //   width:300,
+          //   height:550,
+          //   child: Expanded(
+          //     child: Column(
+          //       children: [
+          //         const SizedBox(height:40),
+          //         SizedBox(
+          //           width:170,
+          //           height:170,
+          //           child: Obx(() => CircularPercentIndicator(
+          //             radius:170,
+          //             lineWidth: 18.0,
+          //             backgroundColor: Colors.grey[350]!,
+          //             percent: poolsController.getTotalGames(poolName),
+          //             circularStrokeCap: CircularStrokeCap.round,
+          //             animation:true,
+          //             animateFromLastPercent: true,
+          //             animationDuration: 300,
+          //             progressColor: Colors.green,
+          //             // linearGradient: LinearGradient(colors: [Colors.green, Colors.orange[300]!]),
+          //             // arcBackgroundColor: Colors.grey[350]!,
+          //             // arcType: ArcType.FULL,
+          //           ))
+          //           // child: Obx(() => CircularProgressIndicator(
+          //           //   color: Colors.green,
+          //           //   value: poolsController.getTotalGames(poolName),
+          //           //   backgroundColor: Colors.grey[350],
+          //           //   strokeWidth: 18,
+          //           // ))
+          //         ),
+          //         const SizedBox(height:40,),
+          //         Obx(() => Container(
+          //           width:230,
+          //           padding: const EdgeInsets.all(10),
+          //           decoration: BoxDecoration(
+          //             color: Colors.white,
+          //             borderRadius: BorderRadius.circular(8),
+          //             border: Border.all(color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!, width: 1.5)
+          //           ),
+          //           child: Row(
+          //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //             children: [
+          //               CustomText(
+          //                 text: "Home Games",
+          //                 size: 20,
+          //                 weight: FontWeight.w300,
+          //                 color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
+          //               ),
+          //               CustomText(
+          //                 text: poolsController.poolBettingStats.value[poolName]!['home'].toString(),
+          //                 size: 20,
+          //                 weight: FontWeight.bold,
+          //                 color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
+          //               )
+          //             ],
+          //           )
+          //         )),
+          //         const SizedBox(height:10,),                
+          //         Obx(() => Container(
+          //           width:230,
+          //           padding: const EdgeInsets.all(10),
+          //           decoration: BoxDecoration(
+          //             color: Colors.white,
+          //             borderRadius: BorderRadius.circular(8),
+          //             border: Border.all(color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!, width: 1.5)
+          //           ),
+          //           child: Row(
+          //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //             children: [
+          //               CustomText(
+          //                 text: "Box Games",
+          //                 size: 20,
+          //                 weight: FontWeight.w300,
+          //                 color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
+          //               ),
+          //               CustomText(
+          //                 text: poolsController.poolBettingStats.value[poolName]!['box'].toString(),
+          //                 size: 20,
+          //                 weight: FontWeight.bold,
+          //                 color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
+          //               )
+          //             ],
+          //           )
+          //         )),     
+          //         const SizedBox(height:10,),                
+          //         Obx(() => Container(
+          //           width:230,
+          //           padding: const EdgeInsets.all(10),
+          //           decoration: BoxDecoration(
+          //             color: Colors.white,
+          //             borderRadius: BorderRadius.circular(8),
+          //             border: Border.all(color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!, width: 1.5)
+          //           ),
+          //           child: Row(
+          //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //             children: [
+          //               CustomText(
+          //                 text: "Away Games",
+          //                 size: 20,
+          //                 weight: FontWeight.w300,
+          //                 color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
+          //               ),
+          //               CustomText(
+          //                 text: poolsController.poolBettingStats.value[poolName]!['away'].toString(),
+          //                 size: 20,
+          //                 weight: FontWeight.bold,
+          //                 color: poolsController.checkIfSelectionStarted(poolName) ? Colors.green : Colors.grey[350]!
+          //               )
+          //             ],
+          //           )
+          //         )),    
+          //         const SizedBox(height:40),       
+          //         // Obx(() => Row(
+          //         //   mainAxisAlignment: MainAxisAlignment.center,
+          //         //   children: [
+          //         //     const CustomText(text: "Home Games: ", size: 20,),
+          //         //     CustomText(size: 20, text: poolsController.poolBettingStats.value[poolName]!['home'].toString(), weight:FontWeight.bold),
+          //         //   ],
+          //         // )),
+          //         // const SizedBox(height:10,),
+          //         // Obx(() => Row(
+          //         //   mainAxisAlignment: MainAxisAlignment.center,
+          //         //   children: [
+          //         //     const CustomText(text: "Box Games: ", size: 20,),
+          //         //     CustomText(size: 20, text: poolsController.poolBettingStats.value[poolName]!['box'].toString(), weight:FontWeight.bold),
+          //         //   ],
+          //         // )),
+          //         // const SizedBox(height:10,),
+          //         // Obx(() => Row(
+          //         //   mainAxisAlignment: MainAxisAlignment.center,
+          //         //   children: [
+          //         //     const CustomText(text: "Away Games: ", size: 20,),
+          //         //     CustomText(size: 20, text: poolsController.poolBettingStats.value[poolName]!['away'].toString(), weight:FontWeight.bold),
+          //         //   ],
+          //         // )),
 
-                  // const SizedBox(height:50,),
-                //   Obx(() => InkWell(
-                //   onTap: () => poolsController.createBet(poolName),
-                //   child:  Container(
-                //       decoration: BoxDecoration(
-                //         color: light,
-                //         borderRadius: BorderRadius.circular(15),
-                //         border: Border.all(color: poolsController.checkTotal(poolName, poolsController.poolSelectionCount.value[poolName]!) ? active: Colors.grey, width: .5),
-                //       ),
-                //       padding: const EdgeInsets.symmetric(
-                //           horizontal: 24, vertical: 12),
-                //       child: CustomText(
-                //         text: "Place Bet",
-                //         color: poolsController.checkTotal(poolName, poolsController.poolSelectionCount.value[poolName]!) ? active: Colors.grey.withOpacity(.7),
-                //         weight: FontWeight.bold,
-                //   )),
-                // )),
-                Obx(() => ProgressButton.icon(iconedButtons: {
-                  ButtonState.idle:
-                    IconedButton(
-                        text: "Place Bet",
-                        icon: Icon(Icons.send,color: Colors.white),
-                        color: poolsController.checkTotal(poolName, poolsController.poolSelectionCount.value[poolName]!) ? Colors.deepPurple.shade500 : Colors.grey[350]!
-                      ),
-                  ButtonState.loading:
-                    IconedButton(
-                        text: "Loading",
-                        color: Colors.deepPurple.shade700),
-                  ButtonState.fail:
-                    IconedButton(
-                        text: "Failed",
-                        icon: Icon(Icons.cancel,color: Colors.white),
-                        color: Colors.red.shade300),
-                  ButtonState.success:
-                    IconedButton(
-                        text: "Redirected",
-                        icon: Icon(Icons.check_circle,color: Colors.white,),
-                        color: Colors.green.shade400)
-                  }, 
-                  onPressed: (){
-                    if(poolsController.checkTotal(poolName, poolsController.poolSelectionCount.value[poolName]!)){
-                      poolsController.buttonState.value = ButtonState.loading;
-                      poolsController.createBet(poolName);
-                    } 
-                  },
-                  state: poolsController.buttonState.value))
-                ],
-              ),
-            )
-          )
+          //         // const SizedBox(height:50,),
+          //       //   Obx(() => InkWell(
+          //       //   onTap: () => poolsController.createBet(poolName),
+          //       //   child:  Container(
+          //       //       decoration: BoxDecoration(
+          //       //         color: light,
+          //       //         borderRadius: BorderRadius.circular(15),
+          //       //         border: Border.all(color: poolsController.checkTotal(poolName, poolsController.poolSelectionCount.value[poolName]!) ? active: Colors.grey, width: .5),
+          //       //       ),
+          //       //       padding: const EdgeInsets.symmetric(
+          //       //           horizontal: 24, vertical: 12),
+          //       //       child: CustomText(
+          //       //         text: "Place Bet",
+          //       //         color: poolsController.checkTotal(poolName, poolsController.poolSelectionCount.value[poolName]!) ? active: Colors.grey.withOpacity(.7),
+          //       //         weight: FontWeight.bold,
+          //       //   )),
+          //       // )),
+          //       Obx(() => ProgressButton.icon(iconedButtons: {
+          //         ButtonState.idle:
+          //           IconedButton(
+          //               text: "Place Bet",
+          //               icon: Icon(Icons.send,color: Colors.white),
+          //               color: poolsController.checkTotal(poolName, poolsController.poolSelectionCount.value[poolName]!) ? Colors.deepPurple.shade500 : Colors.grey[350]!
+          //             ),
+          //         ButtonState.loading:
+          //           IconedButton(
+          //               text: "Loading",
+          //               color: Colors.deepPurple.shade700),
+          //         ButtonState.fail:
+          //           IconedButton(
+          //               text: "Failed",
+          //               icon: Icon(Icons.cancel,color: Colors.white),
+          //               color: Colors.red.shade300),
+          //         ButtonState.success:
+          //           IconedButton(
+          //               text: "Redirected",
+          //               icon: Icon(Icons.check_circle,color: Colors.white,),
+          //               color: Colors.green.shade400)
+          //         }, 
+          //         onPressed: (){
+          //           if(poolsController.checkTotal(poolName, poolsController.poolSelectionCount.value[poolName]!)){
+          //             poolsController.buttonState.value = ButtonState.loading;
+          //             poolsController.createBet(poolName);
+          //           } 
+          //         },
+          //         state: poolsController.buttonState.value))
+          //       ],
+          //     ),
+          //   )
+          // )
         ],
       );
   }
