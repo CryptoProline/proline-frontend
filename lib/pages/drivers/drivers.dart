@@ -31,10 +31,7 @@ class DriversPage extends StatelessWidget {
           ),
           Expanded(
             child: ListView(
-              // children: [OpenPool(dataRow:poolsController.mapMatchRow.value['NHL']!)],
-              children: openPools(),
-              // children: poolsController.mapMatchRow.value.map((k) => OpenPool(dataRow:poolsController.mapMatchRow.value[k]!)).toList(),
-              // children: poolsController.matchRow.value.map((row) => OpenPool(dataRow:row)).toList(),
+              // children: openPools(),
             )
           )
         ],
