@@ -9,6 +9,7 @@ import 'package:web_ui/injector/injector.dart';
 import 'package:web_ui/models/token_info.dart';
 import 'package:web_ui/models/token_model.dart';
 import 'package:web_ui/utils/shared_preferences_manager.dart';
+import 'package:amazon_cognito_identity_dart_2/cognito.dart';
 
 var widget;
 
@@ -39,10 +40,32 @@ class PageTokenState extends State<PageTokenStateful> {
 
       Token token = await ApiClient.getOauth2Token('authorization_code', code, dotenv.env['REDIRECT_URI']);
 
+      // final userPool = CognitoUserPool(
+      //   'us-east-1_AMmEjUEQO',
+      //   'b5u050lva45encgtl4atvcc7s'
+      // );
+
+      // final idToken = CognitoIdToken(token.data.idToken);
+      // final accessToken = CognitoAccessToken(token.data.accessToken);
+      // final refreshToken = CognitoRefreshToken(token.data.refreshToken);
+
+
+      // final session = CognitoUserSession(idToken, accessToken, refreshToken: refreshToken);
+
+      // final user = CognitoUser(null, userPool, signInUserSession: session);
+      // final credentials = CognitoCredentials('us-east-1:e3fc3cf9-d425-4140-b26e-55c761a8dad8', userPool);
+      // await credentials.getAwsCredentials(session.getIdToken().getJwtToken());
+      // print("-------------------------------------------------------------------------------");
+      // print(credentials.accessKeyId);
+      // print(credentials.secretAccessKey);
+      // print(credentials.sessionToken);
+      // print("-------------------------------------------------------------------------------");
       _sharedPreferencesManager.putString(
           SharedPreferencesManager.keyAccessToken, token.data.idToken);
       _sharedPreferencesManager.putString(
           SharedPreferencesManager.keyRefreshToken, token.data.refreshToken);
+      _sharedPreferencesManager.putString(
+          SharedPreferencesManager.keyAuthAccessToken, token.data.accessToken);
 
       // String tokenStr = jsonEncode(token.toJson());
       // print("tokenStr=" + tokenStr);

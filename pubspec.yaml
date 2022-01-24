@@ -43,11 +43,14 @@ dependencies:
   jwt_decode: ^0.3.1
   progress_state_button: ^1.0.4
   percent_indicator: ^3.4.0
+  mqtt_client: ^9.6.5
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  sigv4: ^5.0.0
+  amazon_cognito_identity_dart_2: ^1.0.4
 
 dev_dependencies:
   flutter_test:

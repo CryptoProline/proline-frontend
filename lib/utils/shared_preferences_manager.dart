@@ -5,6 +5,7 @@ class SharedPreferencesManager {
   static SharedPreferences? _sharedPreferences;
 
   static const String keyAccessToken = 'accessToken';
+  static const String keyAuthAccessToken = 'authAccessToken';
   static const String keyRefreshToken = 'refreshToken';
   static const String keyIsLogin = 'isLogin';
   static const String keyUsername = 'username';

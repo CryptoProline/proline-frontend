@@ -18,7 +18,7 @@ class ApiClient {
     };
     var _response = await http.post(getUri('${dotenv.env['API_NAME']}',
         '${dotenv.env['API_VERSION']}/oauth2/token', queryParameters));
-    print("Response" + _response.toString());
+    print("Response" + _response.body);
     var _token = tokenFromJson(_response.body);
     return _token;
   }
@@ -35,12 +35,9 @@ class ApiClient {
 
   static Future<String> getCoinbaseUrl(Map data) async {
     var body = json.encode(data);
-    final SharedPreferencesManager _sharedPreferencesManager =
-        locator<SharedPreferencesManager>();
-    if (_sharedPreferencesManager
-        .isKeyExists(SharedPreferencesManager.keyAccessToken)) {
-      String? token = _sharedPreferencesManager
-          .getString(SharedPreferencesManager.keyAccessToken);
+    final SharedPreferencesManager _sharedPreferencesManager = locator<SharedPreferencesManager>();
+    if (_sharedPreferencesManager.isKeyExists(SharedPreferencesManager.keyAccessToken)) {
+      String? token = _sharedPreferencesManager.getString(SharedPreferencesManager.keyAccessToken);
       print(token);
       var _qParams = {'Authorization': 'Bearer ' + token!};
       var _response = await http.post(
